@@ -13,7 +13,7 @@ class Pixel {
     private var blue: Int = 0
 
     /**
-     * Sets the alpha, red, green, and blue values of the pixel.
+     * Constructor that sets the alpha, red, green, and blue values of the pixel.
      *
      * @param alpha The alpha value of the pixel.
      * @param red   The red value of the pixel.
@@ -21,9 +21,9 @@ class Pixel {
      * @param blue  The blue value of the pixel.
      * @throws InputMismatchException if any of the input values are outside the range of 0 to 255.
      */
-    fun setValues(alpha: Int, red: Int, green: Int, blue: Int) {
+    constructor(alpha: Int, red: Int, green: Int, blue: Int) {
         try {
-            if (areValuesInRange()) {
+            if (areValuesInRange(alpha, red, green, blue)) {
                 this.alpha = alpha
                 this.red = red
                 this.green = green
@@ -37,15 +37,13 @@ class Pixel {
     }
 
     /**
-     * Sets the red, green, and blue values of the pixel and sets the alpha value to 255.
+     * Constructor that sets the red, green, and blue values of the pixel and sets the alpha value to 255.
      *
      * @param red   The red value of the pixel.
      * @param green The green value of the pixel.
      * @param blue  The blue value of the pixel.
      */
-    fun setValues(red: Int, green: Int, blue: Int) {
-        setValues(255, red, green, blue)
-    }
+    constructor(red: Int, green: Int, blue: Int) : this(255,red, green, blue)
 
     /**
      * Generates the hexadecimal code for the pixel based on its alpha, red, green, and blue values.
@@ -59,7 +57,7 @@ class Pixel {
         var blueStr = "00"
         val hex = StringBuilder()
 
-        if (areValuesInRange()) {
+        if (areValuesInRange(alpha, red, green, blue)) {
             redStr = Integer.toHexString(this.red)
             greenStr = Integer.toHexString(this.green)
             blueStr = Integer.toHexString(this.blue)
@@ -79,7 +77,7 @@ class Pixel {
      *
      * @return true if the values are within range, false otherwise.
      */
-    private fun areValuesInRange(): Boolean {
+    private fun areValuesInRange(alpha: Int, red: Int,green: Int,blue: Int): Boolean {
         return (this.alpha in 0..255) && (this.red in 0..255) && (this.green in 0..255) && (this.blue in 0..255)
     }
 }
