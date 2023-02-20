@@ -10,9 +10,14 @@ import javax.imageio.ImageIO
  */
 class Image(filePath: String) {
     // List of unique pixels in the image
-    val pixels: ArrayList<Pixel> = ArrayList()
-    lateinit var currentImage: BufferedImage
+    private val pixels: ArrayList<Pixel> = ArrayList()
+    private lateinit var currentImage: BufferedImage
 
+    /**
+     * Initializes the object by reading the image file from the specified file path and setting the currentImage variable.
+     * If an IOException occurs, it will print the stack trace.
+     * @param filePath the path of the image file to read
+     */
     init {
         try {
             val file = File(filePath)
@@ -37,8 +42,9 @@ class Image(filePath: String) {
     }
 
     /**
-     * Returns a string with all the unique pixels in the image and their hexadecimal codes.
-     * @return A string with all the unique pixels and their hexadecimal codes.
+     * Returns a string containing the hexadecimal codes for all pixels in the image.
+     * The pixels are read using the readPixels() method.
+     * @return a string of hexadecimal codes separated by newlines
      */
     fun getAllPixels(): String {
         readPixels()
@@ -49,20 +55,29 @@ class Image(filePath: String) {
         return stringBuilder.toString()
     }
 
-
+    /**
+     * Reads the pixel data from the current image and creates a new Pixel object for each pixel,
+     * which is then added to the collection of pixels.
+     */
     private fun readPixels() {
         val width = currentImage.width
         val height = currentImage.height
         for (y in 0 until height) {
             for (x in 0 until width) {
                 val argb = currentImage.getRGB(x, y)
+                // Extract the alpha, red, green, and blue components of the pixel
                 val alpha = (argb shr 24) and 0xff
                 val red = (argb shr 16) and 0xff
                 val green = (argb shr 8) and 0xff
                 val blue = argb and 0xff
+
+                // Create a new Pixel object with the extracted components
                 val onePixel = Pixel(alpha, red, green, blue)
+
+                // Add the new pixel to the
                 addPixel(onePixel)
             }
         }
     }
+
 }

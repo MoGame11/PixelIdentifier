@@ -21,15 +21,18 @@ class Pixel(alpha: Int, red: Int, green: Int, blue: Int) {
      */
     init {
         try {
+            // Check if the color values are in range
             if (areValuesInRange(alpha, red, green, blue)) {
                 this.alpha = alpha
                 this.red = red
                 this.green = green
                 this.blue = blue
             } else {
+                // If the values are not in range, an InputMismatchException is thrown
                 throw InputMismatchException()
             }
         } catch (ime: InputMismatchException) {
+            // The catch block prints the stack trace of the InputMismatchException if it is thrown.
             ime.printStackTrace()
         }
     }
@@ -46,22 +49,30 @@ class Pixel(alpha: Int, red: Int, green: Int, blue: Int) {
         var blueStr = "00"
         val hex = StringBuilder()
 
+        // Check if the color values are in range
         if (areValuesInRange(alpha, red, green, blue)) {
             if (alpha != 0) {
                 redStr = Integer.toHexString(this.red)
                 greenStr = Integer.toHexString(this.green)
                 blueStr = Integer.toHexString(this.blue)
 
+                // Add leading zeros to ensure a two-digit hexadecimal value
                 if (redStr.length == 1) redStr = "0$redStr"
                 if (greenStr.length == 1) greenStr = "0$greenStr"
                 if (blueStr.length == 1) blueStr = "0$blueStr"
+
+                // If alpha is not 255, add the alpha value to the hexadecimal code
                 if (alpha != 255) alphaStr = String.format(" - Alpha: %02x", alpha)
+
+                // Append the hexadecimal code to the StringBuilder
                 hex.append('#').append(redStr).append(greenStr).append(blueStr).append(alphaStr)
             } else {
+                // If alpha is 0, the color is transparent
                 hex.append("Transparent")
             }
         }
 
+        // Return the hexadecimal code as a string
         return hex.toString()
     }
 
