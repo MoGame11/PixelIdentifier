@@ -29,13 +29,14 @@ class Menu {
         fileChooser.extensionFilters.add(
             FileChooser.ExtensionFilter(
                 "Image Files",
-                "*.png",
-                "*.jpg",
-                "*.jpeg",
-                "*.gif",
                 "*.bmp",
-                "*.tif",
-                "*.tiff"
+                "*.wbmp",
+                "*.gif",
+                "*.jpeg",
+                "*.jpg",
+                "*.png",
+                "*.webp",
+                "*.raw",
             )
         )
 
