@@ -4,17 +4,32 @@ import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
+import java.io.IOException
 
-class HelloApplication : Application() {
-    override fun start(stage: Stage) {
-        /*val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("hello-view.fxml"))
-        val scene = Scene(fxmlLoader.load(), 320.0, 240.0)
-        stage.title = "Hello!"
-        stage.scene = scene
-        stage.show()*/
+class App : Application() {
+    companion object {
+        val appName = "PixelIdentifier"
+        var scene: Scene? = null
+
+        @Throws(IOException::class)
+        fun findFXMLLoader(s: String): FXMLLoader {
+            return FXMLLoader(App::class.java.getResource("$s.fxml"))
+        }
     }
+
+    override fun start(stage: Stage) {
+        val fxmlLoader: FXMLLoader = App.findFXMLLoader("menu")
+        scene?.root
+        App.scene = Scene(fxmlLoader.load(), 816.0, 544.0)
+        stage.title = App.appName
+        stage.scene = App.scene
+        stage.isResizable = false
+        stage.show()
+    }
+
+
 }
 
 fun main() {
-    Application.launch(HelloApplication::class.java)
+    Application.launch(App::class.java)
 }

@@ -8,13 +8,19 @@ import javax.imageio.ImageIO
 /**
  * The Image class represents an image and contains methods for adding pixels to it and getting all the unique pixels.
  */
-class Image {
+class Image(filePath: String) {
     // List of unique pixels in the image
     val pixels: ArrayList<Pixel> = ArrayList()
-    val currentImage: BufferedImage
-        get() {
-            return currentImage
+    lateinit var currentImage: BufferedImage
+
+    init {
+        try {
+            val file = File(filePath)
+            currentImage = ImageIO.read(file)
+        } catch (ioe: IOException) {
+            ioe.printStackTrace()
         }
+    }
 
     /**
      * Adds a pixel to the list of unique pixels if it does not already exist.
@@ -42,22 +48,18 @@ class Image {
         return stringBuilder.toString()
     }
 
-    /**
-     * Loads an image from a file.
-     * @param filePath The path to the image file.
-     * @return The loaded image as a BufferedImage object.
-     */
-    fun load(filePath: String): BufferedImage? {
-        try {
-            val file = File(filePath)
-            return ImageIO.read(file)
-        } catch (ioe: IOException) {
-            ioe.printStackTrace()
-        }
-        return null
-    }
 
-    fun readPixels(){
-        currentImage.colorModel
+    fun readPixels() {
+        val width = currentImage.width
+        val height = currentImage.height
+        for (y in 0 until height) {
+            for (x in 0 until width) {
+                val argb = currentImage.getRGB(x, y)
+                val alpha = (argb shr 24) and 0xff
+                val red = (argb shr 16) and 0xff
+                val green = (argb shr 8) and 0xff
+                val blue = argb and 0xff
+            }
+        }
     }
 }
