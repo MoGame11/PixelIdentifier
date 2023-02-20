@@ -6,22 +6,20 @@ import java.util.*
  * The Pixel class represents a color as a combination of red, green, blue, and alpha values. It provides methods for setting
  * and getting the values and for generating the color's hexadecimal code.
  */
-class Pixel {
+class Pixel(alpha: Int, red: Int, green: Int, blue: Int) {
     private var alpha: Int = 0
     private var red: Int = 0
     private var green: Int = 0
     private var blue: Int = 0
 
     /**
-     * Constructor that sets the alpha, red, green, and blue values of the pixel.
-     *
-     * @param alpha The alpha value of the pixel.
-     * @param red   The red value of the pixel.
-     * @param green The green value of the pixel.
-     * @param blue  The blue value of the pixel.
-     * @throws InputMismatchException if any of the input values are outside the range of 0 to 255.
+     * Initializes the color with the given alpha, red, green, and blue values.
+     * @param alpha the alpha value of the color (between 0 and 255)
+     * @param red the red value of the color (between 0 and 255)
+     * @param green the green value of the color (between 0 and 255)
+     * @param blue the blue value of the color (between 0 and 255)
      */
-    constructor(alpha: Int, red: Int, green: Int, blue: Int) {
+    init {
         try {
             if (areValuesInRange(alpha, red, green, blue)) {
                 this.alpha = alpha
@@ -35,15 +33,6 @@ class Pixel {
             ime.printStackTrace()
         }
     }
-
-    /**
-     * Constructor that sets the red, green, and blue values of the pixel and sets the alpha value to 255.
-     *
-     * @param red   The red value of the pixel.
-     * @param green The green value of the pixel.
-     * @param blue  The blue value of the pixel.
-     */
-    constructor(red: Int, green: Int, blue: Int) : this(255,red, green, blue)
 
     /**
      * Generates the hexadecimal code for the pixel based on its alpha, red, green, and blue values.
@@ -77,7 +66,7 @@ class Pixel {
      *
      * @return true if the values are within range, false otherwise.
      */
-    private fun areValuesInRange(alpha: Int, red: Int,green: Int,blue: Int): Boolean {
+    private fun areValuesInRange(alpha: Int, red: Int, green: Int, blue: Int): Boolean {
         return (this.alpha in 0..255) && (this.red in 0..255) && (this.green in 0..255) && (this.blue in 0..255)
     }
 }
