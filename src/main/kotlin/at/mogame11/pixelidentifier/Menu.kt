@@ -31,6 +31,7 @@ class Menu {
         if (selectedFile != null) {
             // TODO: do something with the selected file
             val image = Image(filePath)
+            print(image.getAllPixels())
         }
     }
 }

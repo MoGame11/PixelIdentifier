@@ -41,6 +41,7 @@ class Image(filePath: String) {
      * @return A string with all the unique pixels and their hexadecimal codes.
      */
     fun getAllPixels(): String {
+        readPixels()
         val stringBuilder = StringBuilder()
         for (currentBit in pixels) {
             stringBuilder.append(currentBit.getHexCode()).append("\n")
@@ -49,7 +50,7 @@ class Image(filePath: String) {
     }
 
 
-    fun readPixels() {
+    private fun readPixels() {
         val width = currentImage.width
         val height = currentImage.height
         for (y in 0 until height) {
@@ -59,6 +60,8 @@ class Image(filePath: String) {
                 val red = (argb shr 16) and 0xff
                 val green = (argb shr 8) and 0xff
                 val blue = argb and 0xff
+                val onePixel = Pixel(alpha, red, green, blue)
+                addPixel(onePixel)
             }
         }
     }

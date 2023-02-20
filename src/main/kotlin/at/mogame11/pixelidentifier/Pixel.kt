@@ -47,17 +47,21 @@ class Pixel(alpha: Int, red: Int, green: Int, blue: Int) {
         val hex = StringBuilder()
 
         if (areValuesInRange(alpha, red, green, blue)) {
-            redStr = Integer.toHexString(this.red)
-            greenStr = Integer.toHexString(this.green)
-            blueStr = Integer.toHexString(this.blue)
+            if (alpha != 0) {
+                redStr = Integer.toHexString(this.red)
+                greenStr = Integer.toHexString(this.green)
+                blueStr = Integer.toHexString(this.blue)
 
-            if (redStr.length == 1) redStr = "0$redStr"
-            if (greenStr.length == 1) greenStr = "0$greenStr"
-            if (blueStr.length == 1) blueStr = "0$blueStr"
-            if (alpha != 255) alphaStr = String.format(" - Alpha: %02x", alpha)
+                if (redStr.length == 1) redStr = "0$redStr"
+                if (greenStr.length == 1) greenStr = "0$greenStr"
+                if (blueStr.length == 1) blueStr = "0$blueStr"
+                if (alpha != 255) alphaStr = String.format(" - Alpha: %02x", alpha)
+                hex.append('#').append(redStr).append(greenStr).append(blueStr).append(alphaStr)
+            } else {
+                hex.append("Transparent")
+            }
         }
 
-        hex.append('#').append(redStr).append(greenStr).append(blueStr).append(alphaStr)
         return hex.toString()
     }
 
@@ -67,6 +71,6 @@ class Pixel(alpha: Int, red: Int, green: Int, blue: Int) {
      * @return true if the values are within range, false otherwise.
      */
     private fun areValuesInRange(alpha: Int, red: Int, green: Int, blue: Int): Boolean {
-        return (this.alpha in 0..255) && (this.red in 0..255) && (this.green in 0..255) && (this.blue in 0..255)
+        return (alpha in 0..255) && (red in 0..255) && (green in 0..255) && (blue in 0..255)
     }
 }
