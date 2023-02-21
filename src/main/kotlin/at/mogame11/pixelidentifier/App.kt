@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
 import java.io.IOException
+import java.util.*
 
 class App : Application() {
     /**
@@ -15,6 +16,7 @@ class App : Application() {
          * The name of the application.
          */
         const val appName = "PixelIdentifier"
+
         /**
          * The current scene of the application.
          */
@@ -27,8 +29,8 @@ class App : Application() {
          * @throws IOException if the FXML file cannot be loaded
          */
         @Throws(IOException::class)
-        fun findFXMLLoader(fileName: String): FXMLLoader {
-            return FXMLLoader(App::class.java.getResource("$fileName.fxml"))
+        fun findFXMLLoader(fileName: String, resourceBundle: ResourceBundle): FXMLLoader {
+            return FXMLLoader(App::class.java.getResource("$fileName.fxml"), resourceBundle)
         }
     }
 
@@ -38,7 +40,9 @@ class App : Application() {
      * @param stage the primary Stage of the application
      */
     override fun start(stage: Stage) {
-        val fxmlLoader: FXMLLoader = App.findFXMLLoader("menu")
+        val resourceBundle = ResourceBundle.getBundle("at.mogame11.pixelidentifier.Menu")
+
+        val fxmlLoader: FXMLLoader = App.findFXMLLoader("menu", resourceBundle)
         scene?.root
         App.scene = Scene(fxmlLoader.load(), 720.0, 480.0)
         stage.title = App.appName

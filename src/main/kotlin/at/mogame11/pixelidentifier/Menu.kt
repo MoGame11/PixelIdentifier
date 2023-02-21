@@ -3,12 +3,19 @@ package at.mogame11.pixelidentifier
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.stage.FileChooser
+import java.util.*
 
 /**
  * This class represents the menu controller of the pixel identifier application.
  * It provides functionality to choose an image file and display its pixels.
  */
-class Menu {
+class Menu{
+
+    private var resourceBundle: ResourceBundle? = null
+
+    init {
+        resourceBundle = ResourceBundle.getBundle("at.mogame11.pixelidentifier.Menu")
+    }
 
     @FXML
     private val chooseFileButton: Button? = null
@@ -23,12 +30,12 @@ class Menu {
         val fileChooser = FileChooser()
 
         // Set the title of the file chooser
-        fileChooser.title = "Open File"
+        fileChooser.title = resourceBundle?.getString("fileChooser.title")
 
         // Add filters to only allow specific image file types
         fileChooser.extensionFilters.add(
             FileChooser.ExtensionFilter(
-                "Image Files",
+                resourceBundle?.getString("fileChooser.extensionFilterTitle"),
                 "*.bmp",
                 "*.wbmp",
                 "*.gif",
@@ -44,14 +51,18 @@ class Menu {
         val selectedFile = fileChooser.showOpenDialog(chooseFileButton?.scene?.window)
 
         // Get the absolute path of the selected file
-        val filePath = selectedFile.absolutePath
-
+        try {
+            selectedFile.absolutePath
+        }catch (npe: NullPointerException){
+            //npe.printStackTrace()
+            return
+        }
         // If a file was selected, do something with it
         if (selectedFile != null) {
             // TODO: Implement it with JavaFX
 
             // Create a new Image object using the selected file path
-            val image = Image(filePath)
+            val image = Image(selectedFile.absolutePath)
 
             // Print all the pixels in the image
             print(image.getAllPixels())
